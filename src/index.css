@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #1D9492;
+  --color-brand-accent: #E0AA3D;
+  --color-brand-blue: #B1D8F7;
+  --color-brand-blue-soft: #EBF4FC;
+}
+
+/* Custom scrollbar and smooth transitions */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: #1D9492;
+  color: #ffffff;
+}

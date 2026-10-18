@@ -1,0 +1,6 @@
+{
+  "name": "Fiamas",
+  "description": "SaaS para digitalizar el crédito informal (fiados) en tiendas de abarrotes y comercios minoristas. Reemplaza el cuaderno de papel por un sistema centralizado, automatizado y transparente.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
