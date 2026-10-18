@@ -4,7 +4,6 @@ import { Navbar } from '../components/Navbar.tsx';
 import { Hero } from '../components/Hero.tsx';
 import { ProblemSolution } from '../components/ProblemSolution.tsx';
 import { Solution } from '../components/Solution.tsx';
-import { Benefits } from '../components/Benefits.tsx';
 import { Features } from '../components/Features.tsx';
 import { HowItWorks } from '../components/HowItWorks.tsx';
 import { Testimonials } from '../components/Testimonials.tsx';
@@ -113,7 +112,6 @@ export const HomePage: React.FC = () => {
               {/* Secciones de Inicio */}
               <ProblemSolution />
               <Solution />
-              <Benefits />
               <Features />
             </>
           )}

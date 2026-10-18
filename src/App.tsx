@@ -49,11 +49,12 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        {/* 1. Raíz: Hero + ProblemSolution, Solution, Benefits, Features + DownloadSection */}
+        {/* 1. Raíz: Hero + ProblemSolution, Solution, Herramientas + DownloadSection */}
         <Route path="/" element={<HomePage />} />
         <Route path="/solucion" element={<HomePage />} />
         <Route path="/beneficios" element={<HomePage />} />
         <Route path="/caracteristicas" element={<HomePage />} />
+        <Route path="/herramientas" element={<HomePage />} />
 
         {/* 2. Funcionalidad / Cómo funciona: Hero + Cómo empezar en tu tienda, Experiencias + DownloadSection */}
         <Route path="/como-funciona" element={<HomePage />} />

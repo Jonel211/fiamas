@@ -126,18 +126,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
                     Solución
                   </a>
                   <a
-                    href="/#beneficios"
-                    onClick={(e) => handleSectionNav(e, 'beneficios')}
+                    href="/#herramientas"
+                    onClick={(e) => handleSectionNav(e, 'herramientas')}
                     className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
                   >
                     Beneficios
-                  </a>
-                  <a
-                    href="/#caracteristicas"
-                    onClick={(e) => handleSectionNav(e, 'caracteristicas')}
-                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
-                  >
-                    Características
                   </a>
                 </div>
               )}
@@ -255,18 +248,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
                   Solución
                 </a>
                 <a
-                  href="/#beneficios"
-                  onClick={(e) => handleSectionNav(e, 'beneficios')}
+                  href="/#herramientas"
+                  onClick={(e) => handleSectionNav(e, 'herramientas')}
                   className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
                 >
                   Beneficios
-                </a>
-                <a
-                  href="/#caracteristicas"
-                  onClick={(e) => handleSectionNav(e, 'caracteristicas')}
-                  className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
-                >
-                  Características
                 </a>
               </div>
             )}
