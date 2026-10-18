@@ -10,6 +10,7 @@ import { HowItWorks } from '../components/HowItWorks.tsx';
 import { Testimonials } from '../components/Testimonials.tsx';
 import { FaqSection } from '../components/FaqSection.tsx';
 import { ContactSupport } from '../components/ContactSupport.tsx';
+import { DirectAttentionForm } from '../components/DirectAttentionForm.tsx';
 import { DownloadSection } from '../components/DownloadSection.tsx';
 import { Footer } from '../components/Footer.tsx';
 import { DownloadModal } from '../components/DownloadModal.tsx';
@@ -101,8 +102,11 @@ export const HomePage: React.FC = () => {
               {/* Sección: Preguntas frecuentes */}
               <FaqSection />
 
-              {/* Sección: Soporte y atención directa */}
+              {/* Sección: Canales de Soporte */}
               <ContactSupport />
+
+              {/* Sección: Atención directa (Formulario sin border radius) */}
+              <DirectAttentionForm />
             </>
           ) : (
             <>

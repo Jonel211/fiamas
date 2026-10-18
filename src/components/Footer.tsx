@@ -117,7 +117,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDownload, onOpenLegal }) =
               </li>
               <li>
                 <button onClick={() => handleNav('contacto')} className="text-slate-600 hover:text-[#1D9492] transition cursor-pointer">
-                  Contacto directo
+                  Atención directa
                 </button>
               </li>
               {onOpenDownload && (

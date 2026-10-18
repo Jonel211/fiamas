@@ -75,15 +75,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        visible
-          ? 'translate-y-0 opacity-100 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs py-3.5'
-          : '-translate-y-full opacity-0 pointer-events-none py-3.5'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${visible
+        ? 'translate-y-0 opacity-100 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs py-3.5'
+        : '-translate-y-full opacity-0 pointer-events-none py-3.5'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          
+
           {/* Logo */}
           <a
             href="/"
@@ -100,7 +99,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
 
           {/* Desktop Navigation - Clean Text Only, No Icons in Menu Options */}
           <nav className="hidden md:flex items-center gap-6">
-            
+
             {/* 1. PRODUCTO DROPDOWN */}
             <div className="relative" ref={productRef}>
               <button
@@ -108,11 +107,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
                   setProductDropdownOpen(!productDropdownOpen);
                   setHelpDropdownOpen(false);
                 }}
-                className={`flex items-center gap-1.5 py-2 text-[16px] font-bold transition-colors cursor-pointer ${
-                  productDropdownOpen
-                    ? 'text-[#1D9492]'
-                    : 'text-[#000000] hover:text-[#1D9492]'
-                }`}
+                className={`flex items-center gap-1.5 py-2 text-[16px] font-bold transition-colors cursor-pointer ${productDropdownOpen
+                  ? 'text-[#1D9492]'
+                  : 'text-[#000000] hover:text-[#1D9492]'
+                  }`}
               >
                 <span>Producto</span>
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${productDropdownOpen ? 'rotate-180 text-[#1D9492]' : 'text-slate-600'}`} />
@@ -148,11 +146,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
             {/* 2. CÓMO FUNCIONA (Ruta separada: /como-funciona) */}
             <Link
               to="/como-funciona"
-              className={`py-2 text-[16px] font-bold transition-colors cursor-pointer ${
-                isHowItWorksActive
-                  ? 'text-[#1D9492] border-b-2 border-[#1D9492]'
-                  : 'text-[#000000] hover:text-[#1D9492]'
-              }`}
+              className={`py-2 text-[16px] font-bold transition-colors cursor-pointer ${isHowItWorksActive
+                ? 'text-[#1D9492] border-b-2 border-[#1D9492]'
+                : 'text-[#000000] hover:text-[#1D9492]'
+                }`}
             >
               Cómo funciona
             </Link>
@@ -164,11 +161,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
                   setHelpDropdownOpen(!helpDropdownOpen);
                   setProductDropdownOpen(false);
                 }}
-                className={`flex items-center gap-1.5 py-2 text-[16px] font-bold transition-colors cursor-pointer ${
-                  helpDropdownOpen || isHelpActive
-                    ? 'text-[#1D9492]'
-                    : 'text-[#000000] hover:text-[#1D9492]'
-                }`}
+                className={`flex items-center gap-1.5 py-2 text-[16px] font-bold transition-colors cursor-pointer ${helpDropdownOpen || isHelpActive
+                  ? 'text-[#1D9492]'
+                  : 'text-[#000000] hover:text-[#1D9492]'
+                  }`}
               >
                 <span>Ayuda</span>
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${helpDropdownOpen ? 'rotate-180 text-[#1D9492]' : 'text-slate-600'}`} />
@@ -188,7 +184,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
                     onClick={() => setHelpDropdownOpen(false)}
                     className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
                   >
-                    Soporte directo
+                    Soporte
+                  </Link>
+                  <Link
+                    to="/ayuda#atencion-directa"
+                    onClick={() => setHelpDropdownOpen(false)}
+                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
+                  >
+                    Atención directa
                   </Link>
                 </div>
               )}
@@ -232,7 +235,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
       {/* Mobile Drawer - Clean Text Only */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-b border-slate-200 px-5 pt-3 pb-6 space-y-2 shadow-lg animate-in slide-in-from-top duration-150">
-          
+
           {/* Mobile Producto Accordion */}
           <div>
             <button
@@ -273,9 +276,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
           <Link
             to="/como-funciona"
             onClick={() => setMobileMenuOpen(false)}
-            className={`block py-2.5 text-[16px] font-bold transition-colors ${
-              isHowItWorksActive ? 'text-[#1D9492]' : 'text-[#000000] hover:text-[#1D9492]'
-            }`}
+            className={`block py-2.5 text-[16px] font-bold transition-colors ${isHowItWorksActive ? 'text-[#1D9492]' : 'text-[#000000] hover:text-[#1D9492]'
+              }`}
           >
             Cómo funciona
           </Link>
@@ -310,7 +312,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
                   onClick={() => setMobileMenuOpen(false)}
                   className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
                 >
-                  Soporte directo
+                  Soporte
+                </Link>
+                <Link
+                  to="/ayuda#atencion-directa"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
+                >
+                  Atención directa
                 </Link>
               </div>
             )}
