@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X, Download } from 'lucide-react';
 import fiamasLogo from '../assets/fiamas.png';
 
@@ -17,6 +18,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
   const productRef = useRef<HTMLDivElement>(null);
   const helpRef = useRef<HTMLDivElement>(null);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isHowItWorksActive = location.pathname === '/como-funciona' || location.pathname === '/funcionalidad';
+  const isHelpActive = location.pathname === '/ayuda' || location.pathname === '/soporte' || location.pathname === '/faq';
+
   // Close dropdowns on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -31,31 +38,38 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  const handleSectionNav = (e: React.MouseEvent, sectionId: string) => {
     e.preventDefault();
     setProductDropdownOpen(false);
     setHelpDropdownOpen(false);
     setMobileMenuOpen(false);
 
-    if (targetId === 'descargar') {
-      onOpenDownload();
-      const el = document.getElementById('descargar');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-      return;
+    if (location.pathname === '/') {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      navigate('/#' + sectionId);
     }
+  };
 
-    const element = document.getElementById(targetId);
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
     }
   };
 
@@ -72,11 +86,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
           
           {/* Logo */}
           <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            href="/"
+            onClick={handleLogoClick}
             className="flex items-center group focus:outline-none py-0.5"
             aria-label="Fiamas Inicio"
           >
@@ -108,25 +119,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
               </button>
 
               {productDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-none p-2 border border-slate-200">
+                <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-none p-2 border border-slate-200 shadow-lg animate-in fade-in duration-150">
                   <a
-                    href="#solucion"
-                    onClick={(e) => handleNavClick(e, 'solucion')}
-                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
+                    href="/#solucion"
+                    onClick={(e) => handleSectionNav(e, 'solucion')}
+                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
                   >
                     Solución
                   </a>
                   <a
-                    href="#beneficios"
-                    onClick={(e) => handleNavClick(e, 'beneficios')}
-                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
+                    href="/#beneficios"
+                    onClick={(e) => handleSectionNav(e, 'beneficios')}
+                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
                   >
                     Beneficios
                   </a>
                   <a
-                    href="#caracteristicas"
-                    onClick={(e) => handleNavClick(e, 'caracteristicas')}
-                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
+                    href="/#caracteristicas"
+                    onClick={(e) => handleSectionNav(e, 'caracteristicas')}
+                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
                   >
                     Características
                   </a>
@@ -134,14 +145,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
               )}
             </div>
 
-            {/* 2. CÓMO FUNCIONA */}
-            <a
-              href="#como-funciona"
-              onClick={(e) => handleNavClick(e, 'como-funciona')}
-              className="py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors cursor-pointer"
+            {/* 2. CÓMO FUNCIONA (Ruta separada: /como-funciona) */}
+            <Link
+              to="/como-funciona"
+              className={`py-2 text-[16px] font-bold transition-colors cursor-pointer ${
+                isHowItWorksActive
+                  ? 'text-[#1D9492] border-b-2 border-[#1D9492]'
+                  : 'text-[#000000] hover:text-[#1D9492]'
+              }`}
             >
               Cómo funciona
-            </a>
+            </Link>
 
             {/* 3. AYUDA DROPDOWN */}
             <div className="relative" ref={helpRef}>
@@ -151,7 +165,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
                   setProductDropdownOpen(false);
                 }}
                 className={`flex items-center gap-1.5 py-2 text-[16px] font-bold transition-colors cursor-pointer ${
-                  helpDropdownOpen
+                  helpDropdownOpen || isHelpActive
                     ? 'text-[#1D9492]'
                     : 'text-[#000000] hover:text-[#1D9492]'
                 }`}
@@ -161,28 +175,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
               </button>
 
               {helpDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-none p-2 border border-slate-200">
-                  <a
-                    href="#soporte"
-                    onClick={(e) => handleNavClick(e, 'soporte')}
-                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
-                  >
-                    Soporte
-                  </a>
-                  <a
-                    href="#faq"
-                    onClick={(e) => handleNavClick(e, 'faq')}
-                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-none p-2 border border-slate-200 shadow-lg animate-in fade-in duration-150">
+                  <Link
+                    to="/ayuda#faq"
+                    onClick={() => setHelpDropdownOpen(false)}
+                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
                   >
                     Preguntas frecuentes
-                  </a>
-                  <a
-                    href="#contacto"
-                    onClick={(e) => handleNavClick(e, 'contacto')}
-                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
+                  </Link>
+                  <Link
+                    to="/ayuda#soporte"
+                    onClick={() => setHelpDropdownOpen(false)}
+                    className="block px-3 py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] hover:bg-slate-50 transition-colors"
                   >
-                    Contáctanos
-                  </a>
+                    Soporte directo
+                  </Link>
                 </div>
               )}
             </div>
@@ -238,22 +245,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
             {mobileProductOpen && (
               <div className="pl-3 space-y-1 pb-2">
                 <a
-                  href="#solucion"
-                  onClick={(e) => handleNavClick(e, 'solucion')}
+                  href="/#solucion"
+                  onClick={(e) => handleSectionNav(e, 'solucion')}
                   className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
                 >
                   Solución
                 </a>
                 <a
-                  href="#beneficios"
-                  onClick={(e) => handleNavClick(e, 'beneficios')}
+                  href="/#beneficios"
+                  onClick={(e) => handleSectionNav(e, 'beneficios')}
                   className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
                 >
                   Beneficios
                 </a>
                 <a
-                  href="#caracteristicas"
-                  onClick={(e) => handleNavClick(e, 'caracteristicas')}
+                  href="/#caracteristicas"
+                  onClick={(e) => handleSectionNav(e, 'caracteristicas')}
                   className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
                 >
                   Características
@@ -263,13 +270,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
           </div>
 
           {/* Cómo Funciona */}
-          <a
-            href="#como-funciona"
-            onClick={(e) => handleNavClick(e, 'como-funciona')}
-            className="block py-2.5 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
+          <Link
+            to="/como-funciona"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`block py-2.5 text-[16px] font-bold transition-colors ${
+              isHowItWorksActive ? 'text-[#1D9492]' : 'text-[#000000] hover:text-[#1D9492]'
+            }`}
           >
             Cómo funciona
-          </a>
+          </Link>
 
           {/* Mobile Ayuda Accordion */}
           <div>
@@ -282,27 +291,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDownload, visible = true }
             </button>
             {mobileHelpOpen && (
               <div className="pl-3 space-y-1 pb-2">
-                <a
-                  href="#soporte"
-                  onClick={(e) => handleNavClick(e, 'soporte')}
+                <Link
+                  to="/ayuda"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
                 >
-                  Soporte
-                </a>
-                <a
-                  href="#faq"
-                  onClick={(e) => handleNavClick(e, 'faq')}
+                  Centro de Ayuda
+                </Link>
+                <Link
+                  to="/ayuda#faq"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
                 >
                   Preguntas frecuentes
-                </a>
-                <a
-                  href="#contacto"
-                  onClick={(e) => handleNavClick(e, 'contacto')}
+                </Link>
+                <Link
+                  to="/ayuda#soporte"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="block py-2 text-[16px] font-bold text-[#000000] hover:text-[#1D9492] transition-colors"
                 >
-                  Contáctanos
-                </a>
+                  Soporte directo
+                </Link>
               </div>
             )}
           </div>

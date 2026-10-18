@@ -9,8 +9,8 @@ import { Features } from '../components/Features.tsx';
 import { HowItWorks } from '../components/HowItWorks.tsx';
 import { Testimonials } from '../components/Testimonials.tsx';
 import { FaqSection } from '../components/FaqSection.tsx';
-import { DownloadSection } from '../components/DownloadSection.tsx';
 import { ContactSupport } from '../components/ContactSupport.tsx';
+import { DownloadSection } from '../components/DownloadSection.tsx';
 import { Footer } from '../components/Footer.tsx';
 import { DownloadModal } from '../components/DownloadModal.tsx';
 import { LegalModal } from '../components/LegalModal.tsx';
@@ -22,6 +22,9 @@ export const HomePage: React.FC = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const isHowItWorks = location.pathname === '/como-funciona' || location.pathname === '/funcionalidad';
+  const isHelp = location.pathname === '/ayuda' || location.pathname === '/soporte' || location.pathname === '/faq' || location.pathname === '/contacto';
 
   // Show Navbar ONLY when scrolling past the Hero section
   useEffect(() => {
@@ -44,9 +47,6 @@ export const HomePage: React.FC = () => {
       setLegalModalType('terms');
     } else if (location.pathname === '/privacidad') {
       setLegalModalType('privacy');
-    } else if (location.pathname === '/soporte') {
-      const el = document.getElementById('soporte');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
   }, [location.pathname]);
 
@@ -79,39 +79,43 @@ export const HomePage: React.FC = () => {
 
       {/* Main Page Flow: Desktop has slide-over cover effect; Mobile has standard natural scroll */}
       <main className="flex-grow relative">
-        {/* 1. Hero: On mobile, standard relative flow (normal scroll). On desktop (lg+), sticky top-0 h-screen so subsequent sections slide over */}
+        {/* 1. Hero: Compartido en todas las rutas. Si deslizas hacia arriba, siempre te lleva al Hero */}
         <div className="relative lg:sticky lg:top-0 z-0 w-full min-h-screen lg:h-screen lg:overflow-hidden">
           <Hero onOpenDownload={handleOpenDownload} />
         </div>
 
         {/* 2. Slide-over container: On desktop (lg+), covers the sticky hero with elevation shadow. On mobile, normal sequential flow */}
-        <div className="relative z-10 bg-white lg:shadow-[0_-25px_60px_rgba(0,0,0,0.45)]">
-          {/* 2. Traditional Paper vs Fiamas Digital Comparison */}
-          <ProblemSolution />
+        <div id="contenido-secciones" className="relative z-10 bg-white lg:shadow-[0_-25px_60px_rgba(0,0,0,0.45)]">
+          
+          {/* Secciones según la ruta activa */}
+          {isHowItWorks ? (
+            <>
+              {/* Sección: Cómo empezar en tu tienda en 3 pasos */}
+              <HowItWorks onOpenDownload={handleOpenDownload} />
 
-          {/* 3. Solution Architecture (Web Admin + Mobile App + Core Backend) */}
-          <Solution />
+              {/* Sección: Experiencias de comerciantes */}
+              <Testimonials />
+            </>
+          ) : isHelp ? (
+            <>
+              {/* Sección: Preguntas frecuentes */}
+              <FaqSection />
 
-          {/* 4. Core Benefits for Shopkeepers */}
-          <Benefits />
+              {/* Sección: Soporte y atención directa */}
+              <ContactSupport />
+            </>
+          ) : (
+            <>
+              {/* Secciones de Inicio */}
+              <ProblemSolution />
+              <Solution />
+              <Benefits />
+              <Features />
+            </>
+          )}
 
-          {/* 5. Specialized Features for Retail & Bodegas */}
-          <Features />
-
-          {/* 6. Step-by-Step 'Cómo Funciona' Workflow */}
-          <HowItWorks onOpenDownload={handleOpenDownload} />
-
-          {/* 7. Testimonials from Real Bodegueros and Shopkeepers */}
-          <Testimonials />
-
-          {/* 9. Searchable / Accessible FAQ Accordion */}
-          <FaqSection />
-
-          {/* 10. EXACT REQUIRED DOWNLOAD SECTION WITH 2 CARDS */}
+          {/* Sección de Descarga: Presente en todas las rutas en la parte inferior */}
           <DownloadSection />
-
-          {/* 11. Support & Contact Form + Direct WhatsApp */}
-          <ContactSupport />
 
           {/* Complete Professional Footer inside the sliding section */}
           <Footer onOpenDownload={handleOpenDownload} onOpenLegal={handleOpenLegal} />

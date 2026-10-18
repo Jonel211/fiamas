@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Download, ChevronDown, CheckCircle2, ShieldCheck, ArrowRight } from 'lucide-react';
 import { InteractivePhoneMockup } from './InteractivePhoneMockup.tsx';
 import fiamasLogo from '../assets/fiamas.png';
@@ -68,13 +69,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDownload }) => {
                 <span>Descargar APP Gratis</span>
               </button>
 
-              <a
-                href="#como-funciona"
+              <Link
+                to="/como-funciona"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-bold px-6 py-3.5 sm:py-4 rounded-xl text-base border border-slate-300 transition duration-150 active:scale-[0.98] shadow-xs"
               >
                 <span>Ver cómo funciona</span>
                 <ArrowRight className="w-4 h-4 text-[#1D9492]" />
-              </a>
+              </Link>
             </div>
 
             {/* Trust Highlights */}

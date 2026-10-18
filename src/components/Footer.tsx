@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Download, ShieldCheck } from 'lucide-react';
 import fiamasLogo from '../assets/fiamas.png';
 
@@ -8,19 +9,37 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenDownload, onOpenLegal }) => {
-  const handleNav = (targetId: string) => {
-    const el = document.getElementById(targetId);
-    if (el) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+  const navigate = useNavigate();
+  const location = useLocation();
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+  const handleNav = (targetId: string) => {
+    if (targetId === 'como-funciona') {
+      navigate('/como-funciona');
+      return;
+    }
+
+    if (targetId === 'soporte' || targetId === 'faq' || targetId === 'contacto') {
+      navigate('/ayuda#' + targetId);
+      return;
+    }
+
+    // Rutas de secciones de Inicio (solucion, beneficios, caracteristicas)
+    if (location.pathname === '/') {
+      const el = document.getElementById(targetId);
+      if (el) {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      navigate('/#' + targetId);
     }
   };
 
@@ -33,11 +52,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDownload, onOpenLegal }) =
           
           {/* Brand Col */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer" onClick={() => location.pathname === '/' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/')}>
               <img
                 src={fiamasLogo}
                 alt="Fiamas"
-                className="h-10 sm:h-12 w-auto object-contain"
+                className="h-10 sm:h-12 w-auto object-contain hover:opacity-90 transition"
               />
             </div>
 
