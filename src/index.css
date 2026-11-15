@@ -1,10 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap');
 @import "tailwindcss";
 
 @theme {
+  /* Marca */
   --color-brand-primary: #1D9492;
+  --color-brand-primary-dark: #167876;
   --color-brand-accent: #E0AA3D;
   --color-brand-blue: #B1D8F7;
   --color-brand-blue-soft: #EBF4FC;
+
+  /* Superficies de contenedores (paleta de referencia, rojo -> #1D9492) */
+  --color-surface-yellow: #FAEE9B;
+  --color-surface-yellow-soft: #FDF7CF;
+  --color-surface-pink: #FFD3D3;
+  --color-surface-cyan: #C6F7F5;
+  --color-surface-orange: #FFCB85;
+  --color-surface-badge: #FF8A00;
+
+  /* Texto */
+  --color-ink: #1A1A1A;
+  --color-ink-soft: #4A4A4A;
+
+  /* Tipografía de secciones */
+  --font-display: "Fira Sans", "Plus Jakarta Sans", sans-serif;
 }
 
 /* Custom scrollbar and smooth transitions */
@@ -15,4 +33,44 @@ html {
 ::selection {
   background-color: #1D9492;
   color: #ffffff;
+}
+
+@layer components {
+  /* Envoltura exterior de cada bloque: deja aire alrededor del contenedor redondeado */
+  .fm-section {
+    @apply px-3 sm:px-6 lg:px-10 py-5 sm:py-7;
+  }
+
+  /* Contenedor grande redondeado con color de fondo */
+  .fm-container {
+    @apply relative mx-auto max-w-[1720px] rounded-[28px] sm:rounded-[40px] px-5 sm:px-10 lg:px-16 py-14 sm:py-20;
+  }
+
+  /* Título grande de sección */
+  .fm-title {
+    @apply font-display font-bold text-brand-primary tracking-tight text-[32px] leading-[1.1] sm:text-[44px] lg:text-[52px];
+  }
+
+  /* Tarjeta blanca */
+  .fm-card {
+    @apply bg-white rounded-[24px] shadow-[0_10px_30px_rgba(0,0,0,0.06)];
+  }
+
+  /* Botones tipo píldora */
+  .fm-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-primary px-8 py-3.5 text-base font-bold text-white transition duration-150 hover:bg-brand-primary-dark active:scale-[0.98] cursor-pointer;
+  }
+
+  .fm-btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-primary bg-white px-8 py-3 text-base font-bold text-brand-primary transition duration-150 hover:bg-brand-primary hover:text-white active:scale-[0.98] cursor-pointer;
+  }
+
+  .fm-btn-white {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-white px-10 py-3.5 text-base font-bold text-brand-primary transition duration-150 hover:bg-white/90 active:scale-[0.98] cursor-pointer;
+  }
+
+  /* Flechas circulares de carrusel */
+  .fm-arrow {
+    @apply flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border-[3px] border-white bg-brand-primary text-white shadow-lg transition hover:bg-brand-primary-dark active:scale-95 cursor-pointer;
+  }
 }

@@ -85,7 +85,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* 2. Slide-over container: On desktop (lg+), covers the sticky hero with elevation shadow. On mobile, normal sequential flow */}
-        <div id="contenido-secciones" className="relative z-10 bg-white lg:shadow-[0_-25px_60px_rgba(0,0,0,0.45)]">
+        <div id="contenido-secciones" className="relative z-10 bg-white font-display text-ink pt-4 sm:pt-6 lg:shadow-[0_-25px_60px_rgba(0,0,0,0.45)]">
           
           {/* Secciones según la ruta activa */}
           {isHowItWorks ? (
