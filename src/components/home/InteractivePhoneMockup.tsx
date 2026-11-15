@@ -20,8 +20,8 @@ import {
   ShieldCheck,
   RotateCcw
 } from 'lucide-react';
-import { ClientData, FiadoTransaction } from '../types.ts';
-import { INITIAL_CLIENTS, INITIAL_TRANSACTIONS } from '../data/mockAppData.ts';
+import { ClientData, FiadoTransaction } from '../../types.ts';
+import { INITIAL_CLIENTS, INITIAL_TRANSACTIONS } from '../../data/mockAppData.ts';
 
 type ActiveScreen = 'dashboard' | 'clients' | 'new-fiado' | 'cobros' | 'client-detail' | 'store';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Download, ShieldCheck } from 'lucide-react';
-import fiamasLogo from '../assets/fiamas.png';
+import fiamasLogo from '../../assets/fiamas.png';
 
 interface FooterProps {
   onOpenDownload?: () => void;
