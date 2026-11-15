@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { FAQS } from '../../data/landingData.ts';
+import supportIcon from '../../assets/icons/support.png';
 
 export const FaqSection: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>(FAQS[0].id);
@@ -9,40 +11,59 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-24 sm:py-28 bg-[#F8FAFC] text-slate-900 relative border-t border-slate-200">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header - Editorial typography: 64px, weight 400, color #000000 */}
-        <div className="mb-14 sm:mb-16">
-          <h2 className="text-3xl sm:text-5xl lg:text-[64px] font-normal text-black font-['Outfit',sans-serif] tracking-tight leading-[1.1]">
-            Preguntas frecuentes
-          </h2>
-          <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed max-w-2xl">
-            Todo lo que necesitas saber antes de empezar a digitalizar tus fiados.
+    <section id="faq" className="fm-section scroll-mt-20">
+      <div className="fm-container bg-surface-yellow">
+        {/* Ícono decorativo */}
+        <img
+          src={supportIcon}
+          alt=""
+          aria-hidden="true"
+          className="hidden md:block absolute top-8 right-8 lg:right-14 w-20 lg:w-24 drop-shadow-lg animate-floaty pointer-events-none"
+        />
+
+        {/* Cabecera */}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+          <h2 className="fm-title">Preguntas frecuentes</h2>
+          <p className="text-base sm:text-xl text-ink mt-3">
+            Todo lo que necesitas saber sobre el funcionamiento de Fiamas en tu bodega.
           </p>
         </div>
 
-        {/* Clean Accordion with Horizontal Lines */}
-        <div className="border-t border-slate-300">
-          {FAQS.map((item) => {
+        {/* Lista de preguntas en tarjetas blancas redondeadas */}
+        <div className="max-w-4xl mx-auto space-y-4">
+          {FAQS.map((item, idx) => {
             const isOpen = openId === item.id;
+            const num = String(idx + 1).padStart(2, '0');
+
             return (
-              <div key={item.id} className="border-b border-slate-300">
+              <div key={item.id} className="fm-card overflow-hidden">
                 <button
                   onClick={() => toggleFaq(item.id)}
-                  className="w-full py-6 sm:py-7 flex items-center justify-between gap-6 text-left cursor-pointer group focus:outline-none"
+                  className="w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between gap-4 text-left cursor-pointer group"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-lg sm:text-xl md:text-2xl font-normal text-black group-hover:text-slate-700 transition">
-                    {item.question}
-                  </span>
-                  <span className="text-2xl sm:text-3xl font-light text-slate-900 shrink-0 select-none leading-none w-7 text-right">
-                    {isOpen ? '×' : '+'}
+                  <div className="flex items-center gap-4">
+                    <span
+                      className={`w-11 h-11 rounded-full flex items-center justify-center font-display font-bold text-base shrink-0 transition-colors ${
+                        isOpen
+                          ? 'bg-brand-primary text-white'
+                          : 'bg-surface-yellow text-brand-primary border-2 border-brand-primary'
+                      }`}
+                    >
+                      {num}
+                    </span>
+                    <span className="font-display font-bold text-lg sm:text-2xl text-ink group-hover:text-brand-primary transition-colors">
+                      {item.question}
+                    </span>
+                  </div>
+
+                  <span className="w-10 h-10 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                    {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="pb-8 pt-1 text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl">
+                  <div className="px-6 sm:px-8 pb-6 pt-1 sm:pl-[84px] text-base sm:text-lg text-ink-soft leading-relaxed">
                     {item.answer}
                   </div>
                 )}
@@ -50,17 +71,7 @@ export const FaqSection: React.FC = () => {
             );
           })}
         </div>
-
-        {/* Support link */}
-        <div className="mt-12 text-sm text-slate-500">
-          ¿Tienes otra pregunta sobre tu negocio?{' '}
-          <a href="#soporte" className="text-[#1D9492] font-semibold hover:underline">
-            Escríbenos a soporte y te respondemos de inmediato.
-          </a>
-        </div>
-
       </div>
     </section>
   );
 };
-
