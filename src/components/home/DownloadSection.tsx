@@ -11,23 +11,15 @@ import cardTenderosImg from '../../assets/images/card-tenderos.png';
 interface AppPlanCard {
   id: 'android' | 'ios' | 'swift';
   topBadge: string;
-  roleLabel: string;
   title: string;
-  tagBadge: string;
-  versionCode: string;
-  priceLabel: string;
-  priceValue: string;
-  devicesTitle: string;
   storeIcon: string;
   storeName: string;
   storeSub: string;
   avatarIcon: string;
   avatarName: string;
   avatarSub: string;
-  bonusTitle: string;
   bonusHighlight: string;
   bonusSub: string;
-  includesText: string;
   details: string[];
   ctaText: string;
 }
@@ -35,24 +27,16 @@ interface AppPlanCard {
 const APP_CARDS: AppPlanCard[] = [
   {
     id: 'android',
-    topBadge: 'DESCARGA GRATIS',
-    roleLabel: 'Para el Tendero',
-    title: 'Fiamas Tendero',
-    tagBadge: 'PRO',
-    versionCode: 'Android',
-    priceLabel: 'Licencia de mostrador',
-    priceValue: 'S/ 0',
-    devicesTitle: 'Plataforma y uso',
+    topBadge: 'Para el Tendero',
+    title: 'Android',
     storeIcon: playStoreIcon,
     storeName: 'GOOGLE PLAY',
     storeSub: 'Android 8.0 o sup.',
     avatarIcon: tenderoAvatarIcon,
     avatarName: 'MOSTRADOR',
     avatarSub: 'Bodegas y tiendas',
-    bonusTitle: 'Incluido sin costo:',
     bonusHighlight: 'MODO 100% OFFLINE',
     bonusSub: 'Sincronización automática',
-    includesText: 'Incluye: ESCÁNER + WHATSAPP + NUBE',
     details: [
       'Registro de fiados y abonos en 5 segundos',
       'Comprobantes automáticos por WhatsApp',
@@ -62,24 +46,16 @@ const APP_CARDS: AppPlanCard[] = [
   },
   {
     id: 'ios',
-    topBadge: 'PARA NEGOCIOS',
-    roleLabel: 'Para el Tendero',
-    title: 'Fiamas Tendero',
-    tagBadge: 'PRO',
-    versionCode: 'iOS',
-    priceLabel: 'Licencia de mostrador',
-    priceValue: 'S/ 0',
-    devicesTitle: 'Plataforma y uso',
+    topBadge: 'Para el Tendero',
+    title: 'iPhone',
     storeIcon: appStoreIcon,
     storeName: 'APP STORE',
     storeSub: 'iPhone & iPad',
     avatarIcon: tenderoAvatarIcon,
     avatarName: 'ADMINISTRACIÓN',
     avatarSub: 'Face ID & Touch ID',
-    bonusTitle: 'Incluido sin costo:',
     bonusHighlight: 'RESPALDO EN NUBE 24/7',
     bonusSub: 'Reportes en tiempo real',
-    includesText: 'Incluye: CARTERA + REPORTES + NUBE',
     details: [
       'Control consolidado de cuentas por cobrar',
       'Semáforo de riesgo y límites por vecino',
@@ -89,24 +65,16 @@ const APP_CARDS: AppPlanCard[] = [
   },
   {
     id: 'swift',
-    topBadge: 'PARA VECINOS',
-    roleLabel: 'Para el Cliente',
-    title: 'Fiamas Clientes',
-    tagBadge: 'VIP',
-    versionCode: 'App',
-    priceLabel: 'Consulta de saldos',
-    priceValue: 'Gratis',
-    devicesTitle: 'Plataforma y pagos',
+    topBadge: 'Para el Cliente',
+    title: 'iPhone',
     storeIcon: appStoreIcon,
     storeName: 'APP STORE',
     storeSub: 'Disponible en iOS',
     avatarIcon: customerIcon,
     avatarName: 'CLIENTES',
     avatarSub: 'Saldos transparentes',
-    bonusTitle: 'Medios de pago compatibles:',
     bonusHighlight: 'YAPE • PLIN • EFECTIVO',
     bonusSub: 'Con historial de compras',
-    includesText: 'Incluye: RECIBOS + ALERTAS + QR',
     details: [
       'Consulta en vivo el detalle de tus compras fiadas',
       'Revisa cada abono registrado por tu bodega',
@@ -129,7 +97,7 @@ export const DownloadSection: React.FC = () => {
 
   return (
     <div id="descargar" className="scroll-mt-20">
-      {/* 1. Contenedor rosa con las 3 tarjetas de descarga (estilo captura 5) */}
+      {/* 1. Contenedor rosa con las 3 tarjetas de descarga*/}
       <section className="fm-section">
         <div className="fm-container bg-surface-pink">
           <h2 className="fm-title text-center max-w-4xl mx-auto mb-12 sm:mb-16">
@@ -168,35 +136,16 @@ export const DownloadSection: React.FC = () => {
                     {/* Cabecera superior con etiqueta naranja */}
                     <div>
                       <div className="bg-[#EEF6F8] px-6 pb-6 pt-0 text-center">
-                        <div className="inline-block bg-surface-badge text-white text-xs font-extrabold uppercase tracking-wider px-6 py-1.5 rounded-b-xl shadow-xs">
-                          {card.topBadge}
-                        </div>
-
-                        <div className="mt-4 flex items-center justify-center gap-2 text-ink font-semibold text-base">
-                          <Smartphone className="w-5 h-5 text-ink stroke-[2]" />
-                          <span>{card.roleLabel}</span>
+                        <div className="inline-flex items-center justify-center gap-2 bg-surface-badge text-white text-xs font-extrabold uppercase tracking-wider px-6 py-1.5 rounded-b-xl shadow-xs">
+                          <Smartphone className="w-4 h-4 text-white stroke-[2]" />
+                          <span>{card.topBadge}</span>
                         </div>
 
                         <div className="mt-2 flex items-center justify-center gap-2 flex-wrap">
                           <h3 className="font-display font-bold text-ink text-2xl sm:text-[26px]">
                             {card.title}
                           </h3>
-                          <span className="bg-[#E5B869] text-ink text-[11px] font-extrabold px-2 py-0.5 rounded inline-flex items-center gap-1">
-                            👑 {card.tagBadge}
-                          </span>
-                          <span className="font-display font-bold text-ink text-xl">
-                            {card.versionCode}
-                          </span>
                         </div>
-
-                        <p className="text-sm font-bold text-ink mt-4">{card.priceLabel}</p>
-                        <div className="font-display font-extrabold text-brand-primary text-4xl sm:text-[44px] leading-none mt-1">
-                          {card.priceValue}
-                        </div>
-
-                        <p className="text-xs font-bold text-ink mt-5 mb-3">
-                          {card.devicesTitle}
-                        </p>
 
                         {/* Íconos centrales tipo dispositivos disponibles */}
                         <div className="flex items-start justify-center gap-5 pt-1">
@@ -230,16 +179,10 @@ export const DownloadSection: React.FC = () => {
 
                       {/* Franja celeste intermedia */}
                       <div className="bg-[#DFEFF2] py-4 px-5 text-center">
-                        <span className="text-xs text-ink block">{card.bonusTitle}</span>
                         <span className="font-display font-extrabold text-brand-primary text-sm tracking-wide block mt-0.5">
                           {card.bonusHighlight}
                         </span>
                         <span className="text-[11px] font-bold text-ink block">{card.bonusSub}</span>
-                      </div>
-
-                      {/* Incluye */}
-                      <div className="py-3.5 px-5 text-center border-b border-slate-200 text-xs sm:text-sm font-extrabold text-ink">
-                        {card.includesText}
                       </div>
 
                       {/* Acordeón Ver detalle */}
@@ -297,7 +240,7 @@ export const DownloadSection: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Banner de ancho completo color #1D9492 (estilo captura 8) */}
+      {/* 2. Banner de ancho completo color #1D9492*/}
       <section className="bg-brand-primary text-white overflow-hidden mt-8">
         <div className="max-w-[1620px] mx-auto px-6 sm:px-12 lg:px-20 py-12 sm:py-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Texto + botón blanco */}

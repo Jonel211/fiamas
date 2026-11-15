@@ -1,108 +1,104 @@
 import React from 'react';
-import { Mail, Phone, MessageCircle, Clock, MapPin, Headphones, HelpCircle, ShieldCheck } from 'lucide-react';
+import { Mail, Phone, MessageCircle, Clock, ShieldCheck } from 'lucide-react';
+import supportIcon from '../../assets/icons/support.png';
 
 export const ContactSupport: React.FC = () => {
   return (
-    <section id="soporte" className="py-24 bg-[#F8FAFC] text-slate-900 border-t border-slate-200/80">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header de Soporte */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-5xl lg:text-[64px] font-normal not-italic text-[#000000] font-['Outfit',sans-serif] tracking-tight leading-tight lg:leading-[70px]">
-            Soporte para Comerciantes
-          </h2>
-          <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed max-w-2xl mx-auto">
-            Estamos disponibles para acompañar a tu negocio en mostrador. Elige el canal que te resulte más cómodo.
+    <section id="soporte" className="py-16 sm:py-20 bg-white text-ink scroll-mt-20">
+      <div className="max-w-[1620px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <h2 className="fm-title">Canales de Soporte para tu Bodega</h2>
+          <p className="text-base sm:text-xl text-ink-soft mt-3">
+            Acompañamos a tu negocio todos los días. Elige el medio que te resulte más rápido desde el mostrador.
           </p>
         </div>
 
-        {/* Canales de Soporte en Tarjetas Claras */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          
-          {/* Tarjeta 1: WhatsApp Mostrador */}
-          <div className="bg-white border-2 border-[#1D9492]/30 rounded-2xl p-7 flex flex-col justify-between shadow-xs hover:border-[#1D9492] transition group">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 sm:gap-8">
+          {/* Tarjeta 1: WhatsApp (Naranja) */}
+          <div className="rounded-[28px] bg-surface-orange p-7 sm:p-9 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-[#1D9492] text-white flex items-center justify-center mb-5 shadow-sm">
-                <MessageCircle className="w-6 h-6 stroke-[2]" />
+              <div className="flex items-center justify-between mb-5">
+                <span className="bg-brand-primary text-white text-xs font-extrabold uppercase px-3.5 py-1 rounded-full">
+                  Canal preferido
+                </span>
+                <img src={supportIcon} alt="" className="w-12 h-12 object-contain" />
               </div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#1D9492]">Canal preferido</span>
-              <h3 className="text-xl font-bold text-slate-900 font-['Outfit',sans-serif] mt-1 mb-2">
+              <h3 className="font-display font-bold text-brand-primary text-2xl sm:text-[30px] leading-tight">
                 WhatsApp de Soporte
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-                Escríbenos directamente para resolver dudas sobre anotaciones, clientes fiadores o sincronización sin conexión.
+              <p className="text-base text-ink mt-3 leading-relaxed">
+                Escríbenos directamente para resolver dudas sobre anotaciones, clientes fiadores o sincronización sin
+                internet.
               </p>
             </div>
 
-            <div>
+            <div className="pt-6">
               <a
-                href="https://wa.me/525541238901?text=Hola%20Fiamas,%20necesito%20soporte%20para%20mi%20tienda"
+                href="https://wa.me/51999999999?text=Hola%20Fiamas,%20necesito%20soporte%20para%20mi%20tienda"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 bg-[#1D9492] hover:bg-[#167876] text-white font-bold py-3.5 px-4 rounded-xl text-xs sm:text-sm transition shadow-sm cursor-pointer"
+                className="fm-btn w-full"
               >
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-5 h-5" />
                 <span>Chatear por WhatsApp</span>
               </a>
-              <span className="block text-center text-[11px] text-slate-500 mt-2">
-                Respuesta promedio en menos de 10 min
+              <span className="block text-center text-xs font-bold text-ink mt-2.5">
+                Respuesta promedio en menos de 10 minutos
               </span>
             </div>
           </div>
 
-          {/* Tarjeta 2: Atención Telefónica */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-7 flex flex-col justify-between shadow-xs hover:border-slate-300 transition">
+          {/* Tarjeta 2: Teléfono (Cian) */}
+          <div className="rounded-[28px] bg-surface-cyan p-7 sm:p-9 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-[#EFF8FC] text-[#015B76] border border-[#B1D8F7] flex items-center justify-center mb-5">
-                <Phone className="w-6 h-6 stroke-[2]" />
+              <div className="w-14 h-14 rounded-2xl bg-brand-primary text-white flex items-center justify-center mb-5 shadow-sm">
+                <Phone className="w-7 h-7 stroke-[2.2]" />
               </div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Línea directa</span>
-              <h3 className="text-xl font-bold text-slate-900 font-['Outfit',sans-serif] mt-1 mb-2">
-                Línea Telefónica
+              <span className="text-xs font-extrabold uppercase text-ink">Línea directa</span>
+              <h3 className="font-display font-bold text-brand-primary text-2xl sm:text-[30px] leading-tight mt-1">
+                Central Telefónica
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                Si prefieres hablar con una persona de soporte para configurar tu cuenta o resolver una duda urgente.
+              <p className="text-base text-ink mt-3 leading-relaxed">
+                Si prefieres hablar con un asesor de soporte para configurar tu tienda o migrar tu libreta.
               </p>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm font-bold text-slate-800">
-                +52 (55) 8901-4123
+              <div className="mt-5 p-4 bg-white rounded-2xl font-display font-extrabold text-xl text-brand-primary text-center shadow-xs">
+                +51 (01) 640-8910
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 text-xs text-slate-500 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#1D9492] shrink-0" />
-              <span>Lun a Sáb: 7:00 AM – 9:00 PM</span>
+            <div className="pt-5 mt-5 border-t border-ink/15 text-xs sm:text-sm font-bold text-ink flex items-center gap-2">
+              <Clock className="w-4 h-4 text-brand-primary shrink-0" />
+              <span>Lunes a Sábado: 7:00 AM – 9:00 PM</span>
             </div>
           </div>
 
-          {/* Tarjeta 3: Correo Electrónico */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-7 flex flex-col justify-between shadow-xs hover:border-slate-300 transition">
+          {/* Tarjeta 3: Correo (Rosa) */}
+          <div className="rounded-[28px] bg-surface-pink p-7 sm:p-9 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-[#EFF8FC] text-[#015B76] border border-[#B1D8F7] flex items-center justify-center mb-5">
-                <Mail className="w-6 h-6 stroke-[2]" />
+              <div className="w-14 h-14 rounded-2xl bg-brand-primary text-white flex items-center justify-center mb-5 shadow-sm">
+                <Mail className="w-7 h-7 stroke-[2.2]" />
               </div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Consultas generales</span>
-              <h3 className="text-xl font-bold text-slate-900 font-['Outfit',sans-serif] mt-1 mb-2">
+              <span className="text-xs font-extrabold uppercase text-ink">Atención formal</span>
+              <h3 className="font-display font-bold text-brand-primary text-2xl sm:text-[30px] leading-tight mt-1">
                 Correo de Soporte
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                Envíanos capturas de pantalla, reportes de respaldo o consultas de facturación formal.
+              <p className="text-base text-ink mt-3 leading-relaxed">
+                Envíanos capturas de pantalla, solicitudes de respaldo de cuenta o consultas para varias sucursales.
               </p>
               <a
                 href="mailto:soporte@fiamas.com"
-                className="block p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm font-bold text-[#1D9492] hover:underline"
+                className="mt-5 block p-4 bg-white rounded-2xl font-display font-extrabold text-lg text-brand-primary text-center shadow-xs hover:underline"
               >
                 soporte@fiamas.com
               </a>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 text-xs text-slate-500 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#1D9492] shrink-0" />
+            <div className="pt-5 mt-5 border-t border-ink/15 text-xs sm:text-sm font-bold text-ink flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-brand-primary shrink-0" />
               <span>Respaldo de información garantizado</span>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );
