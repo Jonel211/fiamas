@@ -113,9 +113,9 @@ export const HomePage: React.FC = () => {
               <section className="fm-section">
                 <div className="fm-container bg-surface-yellow">
                   <ProblemSolution />
+                  <Solution onOpenDownload={handleOpenDownload} />
                 </div>
               </section>
-              <Solution />
               <Features />
             </>
           )}
