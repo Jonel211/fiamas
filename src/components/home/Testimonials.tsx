@@ -1,6 +1,6 @@
 import React from 'react';
 import { Star, MapPin } from 'lucide-react';
-import { TESTIMONIALS } from '../data/landingData.ts';
+import { TESTIMONIALS } from '../../data/landingData.ts';
 
 export const Testimonials: React.FC = () => {
   return (

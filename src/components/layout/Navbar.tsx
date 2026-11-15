@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X, Download } from 'lucide-react';
-import fiamasLogo from '../assets/fiamas.png';
+import fiamasLogo from '../../assets/fiamas.png';
 
 interface NavbarProps {
   onOpenDownload: () => void;

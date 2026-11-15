@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Download, ChevronDown, CheckCircle2, ShieldCheck, ArrowRight } from 'lucide-react';
 import { InteractivePhoneMockup } from './InteractivePhoneMockup.tsx';
-import fiamasLogo from '../assets/fiamas.png';
+import fiamasLogo from '../../assets/fiamas.png';
 
 interface HeroProps {
   onOpenDownload: () => void;

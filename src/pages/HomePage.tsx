@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Navbar } from '../components/Navbar.tsx';
-import { Hero } from '../components/Hero.tsx';
-import { ProblemSolution } from '../components/ProblemSolution.tsx';
-import { Solution } from '../components/Solution.tsx';
-import { Features } from '../components/Features.tsx';
-import { HowItWorks } from '../components/HowItWorks.tsx';
-import { Testimonials } from '../components/Testimonials.tsx';
-import { FaqSection } from '../components/FaqSection.tsx';
-import { ContactSupport } from '../components/ContactSupport.tsx';
-import { DirectAttentionForm } from '../components/DirectAttentionForm.tsx';
-import { DownloadSection } from '../components/DownloadSection.tsx';
-import { Footer } from '../components/Footer.tsx';
-import { DownloadModal } from '../components/DownloadModal.tsx';
-import { LegalModal } from '../components/LegalModal.tsx';
+import { Navbar } from '../components/layout/Navbar.tsx';
+import { Hero } from '../components/home/Hero.tsx';
+import { ProblemSolution } from '../components/home/ProblemSolution.tsx';
+import { Solution } from '../components/home/Solution.tsx';
+import { Features } from '../components/home/Features.tsx';
+import { HowItWorks } from '../components/home/HowItWorks.tsx';
+import { Testimonials } from '../components/home/Testimonials.tsx';
+import { FaqSection } from '../components/home/FaqSection.tsx';
+import { ContactSupport } from '../components/support/ContactSupport.tsx';
+import { DirectAttentionForm } from '../components/support/DirectAttentionForm.tsx';
+import { DownloadSection } from '../components/home/DownloadSection.tsx';
+import { Footer } from '../components/layout/Footer.tsx';
+import { DownloadModal } from '../components/modals/DownloadModal.tsx';
+import { LegalModal } from '../components/modals/LegalModal.tsx';
 
 export const HomePage: React.FC = () => {
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);

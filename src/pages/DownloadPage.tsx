@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { Navbar } from '../components/Navbar.tsx';
-import { DownloadSection } from '../components/DownloadSection.tsx';
-import { Footer } from '../components/Footer.tsx';
-import { DownloadModal } from '../components/DownloadModal.tsx';
-import { LegalModal } from '../components/LegalModal.tsx';
+import { Navbar } from '../components/layout/Navbar.tsx';
+import { DownloadSection } from '../components/home/DownloadSection.tsx';
+import { Footer } from '../components/layout/Footer.tsx';
+import { DownloadModal } from '../components/modals/DownloadModal.tsx';
+import { LegalModal } from '../components/modals/LegalModal.tsx';
 
 export const DownloadPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

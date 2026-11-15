@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FAQS } from '../data/landingData.ts';
+import { FAQS } from '../../data/landingData.ts';
 
 export const FaqSection: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>(FAQS[0].id);
