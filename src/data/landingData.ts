@@ -1,4 +1,4 @@
-import { BenefitItem, FaqItem, FeatureItem, TestimonialItem } from '../types.ts';
+import { BenefitItem, FaqItem, FeatureItem, StepSlide, TestimonialItem } from '../types.ts';
 
 export const NOTEBOOK_PAINS = [
   {
@@ -269,5 +269,31 @@ export const FAQS: FaqItem[] = [
     category: 'general',
     question: '¿Puedo acceder desde mi computadora además de mi celular?',
     answer: 'Sí. Fiamas cuenta con un panel de administración web (fiamas-tiendas) al que puedes acceder desde cualquier navegador en laptop o computadora para ver reportes detallados, imprimir estados de cuenta o exportar datos a Excel.'
+  }
+];
+
+// ---------------------------------------------------------------------------
+// Inicio: bloque introductorio con pasos (¿Qué es Fiamas?)
+// ---------------------------------------------------------------------------
+export const INTRO_STEPS: StepSlide[] = [
+  {
+    number: '01',
+    title: '¿Qué es Fiamas y cómo funciona?',
+    description: 'Fiamas es una app para bodegas y tiendas de barrio que reemplaza el cuaderno de fiados. Anotas cada compra a crédito en segundos y la app calcula el saldo de cada cliente automáticamente.'
+  },
+  {
+    number: '02',
+    title: '¿Por qué dejar el cuaderno de papel?',
+    description: 'El papel se moja, se pierde y las sumas a mano fallan. Hasta un 30% del fiado anotado en cuaderno nunca llega a cobrarse y cada cobro termina en discusión.'
+  },
+  {
+    number: '03',
+    title: '¿Qué ganas al usar Fiamas?',
+    description: 'Saldos al instante, comprobantes por WhatsApp, límites de crédito por cliente y respaldo en la nube aunque pierdas o cambies tu celular.'
+  },
+  {
+    number: '04',
+    title: '¿Quién puede usarlo?',
+    description: 'Bodegas, minimarkets, abarrotes y cualquier negocio que fíe a sus vecinos. Tus clientes no necesitan instalar nada para recibir su estado de cuenta.'
   }
 ];

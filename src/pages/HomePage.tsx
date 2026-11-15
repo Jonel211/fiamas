@@ -109,8 +109,12 @@ export const HomePage: React.FC = () => {
             </>
           ) : (
             <>
-              {/* Secciones de Inicio */}
-              <ProblemSolution />
+              {/* Secciones de Inicio: bloque principal en contenedor amarillo */}
+              <section className="fm-section">
+                <div className="fm-container bg-surface-yellow">
+                  <ProblemSolution />
+                </div>
+              </section>
               <Solution />
               <Features />
             </>
