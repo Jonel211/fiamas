@@ -116,7 +116,7 @@ export const HomePage: React.FC = () => {
                   <Solution onOpenDownload={handleOpenDownload} />
                 </div>
               </section>
-              <Features />
+              <Features onOpenDownload={handleOpenDownload} />
             </>
           )}
 
