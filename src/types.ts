@@ -63,3 +63,10 @@ export interface FeatureItem {
   description: string;
   tag: string;
 }
+
+export interface StepSlide {
+  number: string;
+  title: string;
+  description: string;
+}
+
