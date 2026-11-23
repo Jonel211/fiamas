@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Send, CheckCircle2, ShieldCheck, Loader2 } from 'lucide-react';
 import cardTenderosImg from '../../assets/images/card-tenderos.png';
+import { apiRequest } from '../../services/api';
+
+// Mapeamos el 'reason' nuevo del formulario al 'type' que espera el backend.
+const REASON_TO_TYPE: Record<string, string> = {
+  asesoria_mostrador: 'soporte',
+  migrar_cuaderno: 'capacitacion',
+  duda_recibos: 'soporte',
+  varias_tiendas: 'ventas',
+};
 
 export const DirectAttentionForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,12 +20,30 @@ export const DirectAttentionForm: React.FC = () => {
     message: ''
   });
   const [sentSuccess, setSentSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSentSuccess(true);
-    setTimeout(() => {
-      setSentSuccess(false);
+    setIsLoading(true);
+    setError('');
+
+    // Construimos el payload con las claves que el backend ya entiende.
+    const payload = {
+      name: formData.name,
+      storeName: formData.storeName,
+      phone: formData.phone,
+      type: REASON_TO_TYPE[formData.reason] || 'soporte',
+      message: formData.message,
+    };
+
+    try {
+      await apiRequest('/avisos/web-contacto', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+
+      setSentSuccess(true);
       setFormData({
         name: '',
         storeName: '',
@@ -24,7 +51,12 @@ export const DirectAttentionForm: React.FC = () => {
         reason: 'asesoria_mostrador',
         message: ''
       });
-    }, 5000);
+      setTimeout(() => setSentSuccess(false), 5000);
+    } catch (err: any) {
+      setError(err.message || 'Hubo un error al enviar. Intenta de nuevo.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -69,6 +101,12 @@ export const DirectAttentionForm: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded-2xl">
+                      {error}
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs font-extrabold text-ink block mb-1.5 uppercase">
@@ -146,9 +184,18 @@ export const DirectAttentionForm: React.FC = () => {
                   </div>
 
                   <div className="pt-2">
-                    <button type="submit" className="fm-btn w-full">
-                      <Send className="w-4 h-4" />
-                      <span>Enviar mensaje a soporte</span>
+                    <button type="submit" disabled={isLoading} className="fm-btn w-full disabled:opacity-60">
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Enviando...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Enviar mensaje a soporte</span>
+                        </>
+                      )}
                     </button>
                   </div>
 
