@@ -1,8 +1,6 @@
-// src/services/api.ts
-
-// Lee la URL del backend desde .env; si no existe, usa el fallback local.
+// Se exporta la URL base de la API.
 export const API_BASE_URL: string =
-  (import.meta.env.VITE_API_URL as string) || 'http://localhost:3001/api';
+  (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000/api';
 
 // Opciones de petición con tipado correcto (evita el error de 'headers').
 export interface ApiRequestOptions extends RequestInit {

@@ -9,32 +9,117 @@ const REASON_TO_TYPE: Record<string, string> = {
   migrar_cuaderno: 'capacitacion',
   duda_recibos: 'soporte',
   varias_tiendas: 'ventas',
+  otro: 'otro',
 };
+
+const REASON_LABELS: Record<string, string> = {
+  asesoria_mostrador: 'Ayuda para empezar a registrar fiados',
+  migrar_cuaderno: 'Pasar las cuentas de mi libreta a Fiamas',
+  duda_recibos: 'Pregunta sobre recibos de WhatsApp',
+  varias_tiendas: 'Tengo más de una tienda o sucursal',
+  otro: 'Otra consulta para mi negocio',
+};
+
+interface FormErrors {
+  name?: string;
+  storeName?: string;
+  phone?: string;
+  reason?: string;
+  message?: string;
+}
 
 export const DirectAttentionForm: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     storeName: '',
     phone: '',
-    reason: 'asesoria_mostrador',
+    reason: '',
     message: ''
   });
+  const [errors, setErrors] = useState<FormErrors>({});
   const [sentSuccess, setSentSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const handleFieldChange = (field: keyof typeof formData, value: string) => {
+    let sanitizedValue = value;
+    if (field === 'phone') {
+      // Bloquea letras: solo permite dígitos, signo + al inicio, espacios y guiones
+      sanitizedValue = value.replace(/[^\d+\s-]/g, '');
+    }
+    setFormData((prev) => ({ ...prev, [field]: sanitizedValue }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+    if (error) setError('');
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    const trimmedName = formData.name.trim();
+    if (!trimmedName) {
+      newErrors.name = 'Ingresa tu nombre completo.';
+    } else if (trimmedName.length < 2) {
+      newErrors.name = 'El nombre debe tener al menos 2 letras.';
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s.'-]+$/.test(trimmedName)) {
+      newErrors.name = 'El nombre solo debe contener letras y espacios.';
+    }
+
+    const trimmedStore = formData.storeName.trim();
+    if (!trimmedStore) {
+      newErrors.storeName = 'Ingresa el nombre de tu bodega o tienda.';
+    } else if (trimmedStore.length < 2) {
+      newErrors.storeName = 'El nombre de la bodega debe tener al menos 2 caracteres.';
+    }
+
+    const trimmedPhone = formData.phone.trim();
+    const digits = trimmedPhone.replace(/\D/g, '');
+    if (!trimmedPhone) {
+      newErrors.phone = 'Ingresa tu número de WhatsApp o celular.';
+    } else if (/[a-zA-Z]/.test(trimmedPhone) || !/^[+\d\s-]+$/.test(trimmedPhone)) {
+      newErrors.phone = 'El teléfono solo debe contener números.';
+    } else if (digits.length < 9) {
+      newErrors.phone = 'Ingresa un número válido (mínimo 9 dígitos).';
+    }
+
+    const validReasons = Object.keys(REASON_TO_TYPE);
+    if (!formData.reason) {
+      newErrors.reason = 'Selecciona un motivo de consulta.';
+    } else if (!validReasons.includes(formData.reason)) {
+      newErrors.reason = 'Selecciona un motivo de consulta válido.';
+    }
+
+    const trimmedMsg = formData.message.trim();
+    if (!trimmedMsg) {
+      newErrors.message = 'Escribe el detalle de tu consulta.';
+    } else if (trimmedMsg.length < 5) {
+      newErrors.message = 'Por favor ingresa al menos 5 caracteres en tu consulta.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError('');
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
 
     // Construimos el payload con las claves que el backend ya entiende.
     const payload = {
-      name: formData.name,
-      storeName: formData.storeName,
-      phone: formData.phone,
+      name: formData.name.trim(),
+      storeName: formData.storeName.trim(),
+      phone: formData.phone.trim(),
       type: REASON_TO_TYPE[formData.reason] || 'soporte',
-      message: formData.message,
+      reason: formData.reason,
+      reasonLabel: REASON_LABELS[formData.reason] || 'Consulta general',
+      message: formData.message.trim(),
     };
 
     try {
@@ -48,9 +133,10 @@ export const DirectAttentionForm: React.FC = () => {
         name: '',
         storeName: '',
         phone: '',
-        reason: 'asesoria_mostrador',
+        reason: '',
         message: ''
       });
+      setErrors({});
       setTimeout(() => setSentSuccess(false), 5000);
     } catch (err: any) {
       setError(err.message || 'Hubo un error al enviar. Intenta de nuevo.');
@@ -100,7 +186,7 @@ export const DirectAttentionForm: React.FC = () => {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} noValidate className="space-y-4">
                   {error && (
                     <div className="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded-2xl">
                       {error}
@@ -108,65 +194,96 @@ export const DirectAttentionForm: React.FC = () => {
                   )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
+                    <div className="min-w-0">
                       <label className="text-xs font-extrabold text-ink block mb-1.5 uppercase">
                         Tu nombre *
                       </label>
                       <input
                         type="text"
-                        required
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={(e) => handleFieldChange('name', e.target.value)}
                         placeholder="Ej: Roberto Gómez"
-                        className="w-full bg-slate-50 border border-slate-300 rounded-2xl py-3.5 px-4 text-sm text-ink placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
+                        className={`w-full bg-slate-50 border rounded-2xl py-3.5 px-4 text-sm text-ink placeholder-slate-400 focus:outline-none transition-all ${
+                          errors.name
+                            ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-400/20 bg-red-50/20'
+                            : 'border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20'
+                        }`}
                       />
+                      {errors.name && (
+                        <p className="text-xs text-red-500 font-medium mt-1.5 animate-in fade-in">{errors.name}</p>
+                      )}
                     </div>
 
-                    <div>
+                    <div className="min-w-0">
                       <label className="text-xs font-extrabold text-ink block mb-1.5 uppercase">
                         Nombre de tu bodega *
                       </label>
                       <input
                         type="text"
-                        required
                         value={formData.storeName}
-                        onChange={(e) => setFormData({ ...formData, storeName: e.target.value })}
+                        onChange={(e) => handleFieldChange('storeName', e.target.value)}
                         placeholder="Ej: Bodega San Martín"
-                        className="w-full bg-slate-50 border border-slate-300 rounded-2xl py-3.5 px-4 text-sm text-ink placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
+                        className={`w-full bg-slate-50 border rounded-2xl py-3.5 px-4 text-sm text-ink placeholder-slate-400 focus:outline-none transition-all ${
+                          errors.storeName
+                            ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-400/20 bg-red-50/20'
+                            : 'border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20'
+                        }`}
                       />
+                      {errors.storeName && (
+                        <p className="text-xs text-red-500 font-medium mt-1.5 animate-in fade-in">{errors.storeName}</p>
+                      )}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-xs font-extrabold text-ink block mb-1.5 uppercase">
-                        WhatsApp o celular *
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="Ej: +51 987 654 321"
-                        className="w-full bg-slate-50 border border-slate-300 rounded-2xl py-3.5 px-4 text-sm text-ink placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
-                      />
-                    </div>
+                  <div className="min-w-0">
+                    <label className="text-xs font-extrabold text-ink block mb-1.5 uppercase">
+                      WhatsApp o celular *
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => handleFieldChange('phone', e.target.value)}
+                      placeholder="Ej: +51 987 654 321"
+                      className={`w-full bg-slate-50 border rounded-2xl py-3.5 px-4 text-sm text-ink placeholder-slate-400 focus:outline-none transition-all ${
+                        errors.phone
+                          ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-400/20 bg-red-50/20'
+                          : 'border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20'
+                      }`}
+                    />
+                    {errors.phone && (
+                      <p className="text-xs text-red-500 font-medium mt-1.5 animate-in fade-in">{errors.phone}</p>
+                    )}
+                  </div>
 
-                    <div>
-                      <label className="text-xs font-extrabold text-ink block mb-1.5 uppercase">
-                        Motivo de consulta *
-                      </label>
+                  <div className="min-w-0">
+                    <label className="text-xs font-extrabold text-ink block mb-1.5 uppercase">
+                      Motivo de consulta *
+                    </label>
+                    <div className="relative w-full min-w-0">
                       <select
                         value={formData.reason}
-                        onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-2xl py-3.5 px-4 text-sm text-ink focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
+                        onChange={(e) => handleFieldChange('reason', e.target.value)}
+                        className={`w-full max-w-full min-w-0 truncate text-ellipsis bg-slate-50 border rounded-2xl py-3.5 pl-4 pr-10 text-sm focus:outline-none transition-all cursor-pointer ${
+                          !formData.reason ? 'text-slate-400' : 'text-ink'
+                        } ${
+                          errors.reason
+                            ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-400/20 bg-red-50/20'
+                            : 'border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20'
+                        }`}
                       >
-                        <option value="asesoria_mostrador">Empezar a registrar fiados</option>
-                        <option value="migrar_cuaderno">Pasar mi libreta a Fiamas</option>
-                        <option value="duda_recibos">Recibos por WhatsApp</option>
-                        <option value="varias_tiendas">Tengo más de una tienda</option>
+                        <option value="" disabled className="text-slate-400">
+                          Selecciona un motivo de consulta...
+                        </option>
+                        <option value="asesoria_mostrador" className="text-ink">Ayuda para empezar a registrar fiados</option>
+                        <option value="migrar_cuaderno" className="text-ink">Pasar las cuentas de mi libreta a Fiamas</option>
+                        <option value="duda_recibos" className="text-ink">Pregunta sobre recibos de WhatsApp</option>
+                        <option value="varias_tiendas" className="text-ink">Tengo más de una tienda o sucursal</option>
+                        <option value="otro" className="text-ink">Otra consulta para mi negocio</option>
                       </select>
                     </div>
+                    {errors.reason && (
+                      <p className="text-xs text-red-500 font-medium mt-1.5 animate-in fade-in">{errors.reason}</p>
+                    )}
                   </div>
 
                   <div>
@@ -175,16 +292,22 @@ export const DirectAttentionForm: React.FC = () => {
                     </label>
                     <textarea
                       rows={3}
-                      required
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) => handleFieldChange('message', e.target.value)}
                       placeholder="Cuéntanos cómo podemos ayudarte en tu tienda..."
-                      className="w-full bg-slate-50 border border-slate-300 rounded-2xl p-4 text-sm text-ink placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 resize-none"
+                      className={`w-full bg-slate-50 border rounded-2xl p-4 text-sm text-ink placeholder-slate-400 focus:outline-none transition-all resize-none ${
+                        errors.message
+                          ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-400/20 bg-red-50/20'
+                          : 'border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20'
+                      }`}
                     />
+                    {errors.message && (
+                      <p className="text-xs text-red-500 font-medium mt-1.5 animate-in fade-in">{errors.message}</p>
+                    )}
                   </div>
 
                   <div className="pt-2">
-                    <button type="submit" disabled={isLoading} className="fm-btn w-full disabled:opacity-60">
+                    <button type="submit" disabled={isLoading} className="fm-btn w-full disabled:opacity-60 cursor-pointer">
                       {isLoading ? (
                         <>
                           <Loader2 className="w-4 h-4 animate-spin" />

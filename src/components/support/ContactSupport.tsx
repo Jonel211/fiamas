@@ -34,7 +34,7 @@ export const ContactSupport: React.FC = () => {
 
             <div className="pt-6">
               <a
-                href="https://wa.me/51999999999?text=Hola%20Fiamas,%20necesito%20soporte%20para%20mi%20tienda"
+                href="https://wa.me/51967343698?text=Hola%20Fiamas,%20necesito%20soporte%20para%20mi%20tienda"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fm-btn w-full"
@@ -62,7 +62,7 @@ export const ContactSupport: React.FC = () => {
                 Si prefieres hablar con un asesor de soporte para configurar tu tienda o migrar tu libreta.
               </p>
               <div className="mt-5 p-4 bg-white rounded-2xl font-display font-extrabold text-xl text-brand-primary text-center shadow-xs">
-                +51 (01) 640-8910
+                +51 967343698
               </div>
             </div>
 
